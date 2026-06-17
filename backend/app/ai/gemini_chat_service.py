@@ -1,8 +1,11 @@
+import logging
+
 from google import genai
 from google.genai import types
 
 from app.core.config import settings
 
+logger = logging.getLogger(__name__)
 
 class GeminiChatError(Exception):
     pass
@@ -145,9 +148,17 @@ def generate_grounded_answer(
 
     except GeminiChatError:
         raise
-
     except Exception as error:
+        logger.exception(
+            (
+                "Gemini generate_content failed | "
+                "model=%s | error_type=%s | error=%s"
+            ),
+            settings.gemini_model_name,
+            type(error).__name__,
+            str(error),
+        )
+
         raise GeminiChatError(
-            "The AI answer service is currently "
-            "unavailable."
+            "The AI answer service is currently unavailable."
         ) from error
