@@ -1,0 +1,47 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+*.log
+
+# Node
+node_modules/
+dist/
+npm-debug.log*
+
+# Application uploads
+backend/uploads/
+
+# AI model cache
+.cache/
+huggingface/
+
+# Editors
+.vscode/
+.idea/
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+# Database exports and temporary setup files
+*.dump
+*.backup
+token.json
+docker-profile.json
+
+# Secrets
+backend/.env
+frontend/.env
+
+# Local generated content
+backend/uploads/
