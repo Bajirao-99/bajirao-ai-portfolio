@@ -20,6 +20,10 @@ def get_embedding_model():
     global _embedding_model
     global _model_loading_failed
 
+    if settings.disable_embedding_model:
+        _model_loading_failed = True
+        return None
+
     if _embedding_model is not None:
         return _embedding_model
 

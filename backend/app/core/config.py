@@ -33,6 +33,8 @@ class Settings(BaseSettings):
         "sentence-transformers/all-MiniLM-L6-v2"
     )
 
+    disable_embedding_model: bool = False
+
     gemini_api_key: SecretStr
     gemini_model_name: str = "gemini-3.5-flash"
 
