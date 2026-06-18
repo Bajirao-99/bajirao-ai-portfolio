@@ -1,3 +1,7 @@
+import { Analytics } from "@vercel/analytics/react";
+
+import { SpeedInsights } from "@vercel/speed-insights/react";
+
 import {
   StrictMode,
 } from "react";
@@ -32,6 +36,8 @@ createRoot(rootElement).render(
     <BrowserRouter>
       <AdminAuthProvider>
         <App />
+        <Analytics />
+        <SpeedInsights />
       </AdminAuthProvider>
     </BrowserRouter>
   </StrictMode>,
