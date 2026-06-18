@@ -259,7 +259,14 @@ export default function ProjectImageManager({
                   {imageUrl && (
                     <img
                       src={imageUrl}
-                      alt={image.alt_text}
+                      alt={
+                        image.alt_text ||
+                        "Project image preview"
+                      }
+                      loading="lazy"
+                      decoding="async"
+                      width={1200}
+                      height={675}
                     />
                   )}
 

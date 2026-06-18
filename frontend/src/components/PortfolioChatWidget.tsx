@@ -213,6 +213,8 @@ export default function PortfolioChatWidget() {
         type="button"
         className="chat-launcher"
         aria-label="Open AI portfolio assistant"
+        aria-expanded={open}
+        aria-controls="portfolio-chat-widget"
         onClick={() => {
           setOpen(true);
         }}
@@ -224,6 +226,7 @@ export default function PortfolioChatWidget() {
 
       {open && (
         <section
+          id="portfolio-chat-widget"
           className="chat-widget"
           aria-label="AI portfolio assistant"
         >
@@ -255,7 +258,13 @@ export default function PortfolioChatWidget() {
             </button>
           </header>
 
-          <div className="chat-messages">
+          <div
+            className="chat-messages"
+            role="log"
+            aria-live="polite"
+            aria-relevant="additions text"
+            aria-busy={loading}
+          >
             {messages.map((message) => (
               <div
                 className={`chat-message chat-message-${message.role}`}
@@ -329,20 +338,31 @@ export default function PortfolioChatWidget() {
               </div>
             ))}
 
+
             {loading && (
               <div className="chat-message chat-message-assistant">
                 <div className="chat-message-content">
-                  <span className="chat-mini-avatar">
+                  <span
+                    className="chat-mini-avatar"
+                    aria-hidden="true"
+                  >
                     <Sparkles size={15} />
                   </span>
 
-                  <p className="chat-thinking">
+                  <p
+                    className="chat-thinking"
+                    aria-hidden="true"
+                  >
                     <LoaderCircle
                       className="spin"
                       size={16}
                     />
                     Searching portfolio data...
                   </p>
+
+                  <span className="sr-only">
+                    The assistant is preparing a response.
+                  </span>
                 </div>
               </div>
             )}

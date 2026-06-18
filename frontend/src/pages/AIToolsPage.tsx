@@ -316,9 +316,12 @@ export default function AIToolsPage() {
             </div>
 
             {error && (
-              <div className="ai-form-message ai-form-error">
-                <TriangleAlert size={18} />
-                {error}
+              <div 
+                className="ai-form-message ai-form-error"
+                role="alert"
+                >
+                  <TriangleAlert size={18} />
+                  {error}
               </div>
             )}
 

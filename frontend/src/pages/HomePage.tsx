@@ -385,6 +385,11 @@ export default function HomePage() {
                 <img
                   src={profileImageUrl}
                   alt={profile.full_name}
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                  width={480}
+                  height={480}
                 />
               ) : (
                 <div className="profile-initials">
@@ -729,8 +734,13 @@ export default function HomePage() {
                       <img
                         src={projectImageUrl}
                         alt={
-                          projectImage.alt_text
+                          projectImage.alt_text ||
+                          `${project.title} project screenshot`
                         }
+                        loading="lazy"
+                        decoding="async"
+                        width={1200}
+                        height={675}
                       />
                     ) : (
                       <div className="project-placeholder">
@@ -1030,7 +1040,11 @@ export default function HomePage() {
             <div className="github-profile-card">
               <img
                 src={github.profile.avatar_url}
-                alt={github.profile.username}
+                alt={`${github.profile.username} GitHub profile`}
+                loading="lazy"
+                decoding="async"
+                width={460}
+                height={460}
               />
 
               <div className="github-profile-content">
@@ -1475,15 +1489,22 @@ export default function HomePage() {
             </label>
 
             {contactSuccess && (
-              <div className="form-message form-success">
+              <div 
+                className="form-message form-success"
+                role="status"
+                aria-live="polite"
+              >
                 <CheckCircle2 size={18} />
                 {contactSuccess}
               </div>
             )}
 
             {contactError && (
-              <div className="form-message form-error">
-                {contactError}
+              <div 
+                className="form-message form-error"
+                role="alert"
+                >
+                  {contactError}
               </div>
             )}
 

@@ -307,15 +307,22 @@ export default function InterviewRequestForm() {
       </label>
 
       {successMessage && (
-        <div className="ai-form-message ai-form-success">
+        <div
+          className="ai-form-message ai-form-success"
+          role="status"
+          aria-live="polite"
+        >
           <CheckCircle2 size={18} />
           {successMessage}
         </div>
       )}
 
       {errorMessage && (
-        <div className="ai-form-message ai-form-error">
-          {errorMessage}
+        <div 
+          className="ai-form-message ai-form-error"
+          role="alert"
+          >
+            {errorMessage}
         </div>
       )}
 

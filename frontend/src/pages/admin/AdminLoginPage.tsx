@@ -153,7 +153,10 @@ export default function AdminLoginPage() {
           </label>
 
           {error && (
-            <div className="admin-login-error">
+            <div 
+              className="admin-login-error"
+              role="alert"
+            >
               {error}
             </div>
           )}

@@ -209,7 +209,14 @@ export default function ProjectDetailPage() {
                 <figure key={image.id}>
                   <img
                     src={imageUrl}
-                    alt={image.alt_text}
+                    alt={
+                      image.alt_text ||
+                      "Project screenshot"
+                    }
+                    loading="lazy"
+                    decoding="async"
+                    width={1200}
+                    height={675}
                   />
 
                   {image.caption && (

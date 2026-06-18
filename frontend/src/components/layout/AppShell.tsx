@@ -1,5 +1,7 @@
 import PortfolioChatWidget from "../PortfolioChatWidget";
 
+import RouteSeo from "../RouteSeo";
+
 import {
   BrainCircuit,
   Download,
@@ -81,6 +83,15 @@ export default function AppShell() {
 
   return (
     <div className="site-shell">
+      <RouteSeo />
+
+      <a
+        className="skip-link"
+        href="#main-content"
+      >
+        Skip to main content
+      </a>
+
       <header className="site-header">
         <div className="container navbar">
           <Link
@@ -130,8 +141,7 @@ export default function AppShell() {
             aria-expanded={mobileMenuOpen}
             onClick={() => {
               setMobileMenuOpen(
-                (currentValue) =>
-                  !currentValue,
+                (currentValue) => !currentValue,
               );
             }}
           >
@@ -144,7 +154,10 @@ export default function AppShell() {
         </div>
       </header>
 
-      <main>
+      <main
+        id="main-content"
+        tabIndex={-1}
+      >
         <Outlet />
       </main>
 

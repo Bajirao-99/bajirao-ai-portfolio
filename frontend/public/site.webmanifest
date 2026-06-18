@@ -1,0 +1,17 @@
+{
+  "name": "Bajirao AI Portfolio",
+  "short_name": "Bajirao",
+  "description": "AI-powered professional portfolio of Bajirao Ramling Salunke.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f4f1",
+  "theme_color": "#9b382e",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
