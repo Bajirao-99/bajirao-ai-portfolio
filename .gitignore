@@ -44,4 +44,4 @@ backend/.env
 frontend/.env
 
 # Local generated content
-backend/uploads/
+backend/uploads/Key.txt
