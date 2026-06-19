@@ -161,6 +161,11 @@ export default function HomePage() {
     });
 
   const [
+    profileImageFailed, 
+    setProfileImageFailed
+  ] = useState(false);
+
+  const [
     contactSubmitting,
     setContactSubmitting,
   ] = useState(false);
@@ -279,9 +284,11 @@ export default function HomePage() {
     : null;
 
   const profileImageUrl =
-    resolveApiUrl(
-      profile.profile_image_url,
-    );
+    profile.profile_image_url
+      ? resolveApiUrl(
+        profile.profile_image_url,
+      )
+      : null;
 
   return (
     <>
@@ -381,7 +388,7 @@ export default function HomePage() {
             <div className="profile-orbit profile-orbit-small" />
 
             <div className="profile-card">
-              {profileImageUrl ? (
+              {profileImageUrl && !profileImageFailed ? (
                 <img
                   src={profileImageUrl}
                   alt={profile.full_name}
@@ -390,9 +397,15 @@ export default function HomePage() {
                   decoding="async"
                   width={480}
                   height={480}
+                  onError={() => {
+                    setProfileImageFailed(true);
+                  }}
                 />
               ) : (
-                <div className="profile-initials">
+                <div 
+                  className="profile-initials"
+                  aria-label={profile.full_name}
+                >
                   {getInitials(
                     profile.full_name,
                   )}
