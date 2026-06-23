@@ -120,5 +120,5 @@ jobs:
 
       - name: Build frontend
         env:
-          VITE_API_BASE_URL: https://bajirao-ai-portfolio-api.onrender.com
+          VITE_API_BASE_URL: https://api.bajiraosalunke.com
         run: npm run build

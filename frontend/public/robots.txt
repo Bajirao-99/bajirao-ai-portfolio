@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin
 
-Sitemap: https://bajirao-ai-portfolio.vercel.app/sitemap.xml
+Sitemap: https://bajiraosalunke.com/sitemap.xml

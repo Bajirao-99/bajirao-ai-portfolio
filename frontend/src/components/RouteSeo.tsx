@@ -9,7 +9,7 @@ interface SeoMetadata {
 
 const configuredSiteUrl =
   import.meta.env.VITE_SITE_URL ||
-  "https://bajirao-ai-portfolio.vercel.app";
+  "https://bajiraosalunke.com";
 
 const SITE_URL = configuredSiteUrl.replace(
   /\/+$/,
