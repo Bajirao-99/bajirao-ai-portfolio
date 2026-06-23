@@ -5,6 +5,7 @@ from fastapi import (
     Query,
     Response,
     status,
+    BackgroundTasks,
 )
 from sqlalchemy.orm import Session
 
@@ -25,6 +26,10 @@ from app.services.communication_service import (
     update_interview_request,
 )
 
+from app.services.email_service import (
+    send_interview_admin_notification,
+    send_interview_confirmation,
+)
 
 public_router = APIRouter(
     prefix="/api/v1/interview-requests",
@@ -37,7 +42,6 @@ admin_router = APIRouter(
     tags=["Admin Interview Requests"],
 )
 
-
 @public_router.post(
     "",
     response_model=SubmissionResponse,
@@ -45,11 +49,39 @@ admin_router = APIRouter(
 )
 def submit_interview_request(
     request_data: InterviewRequestCreate,
+    background_tasks: BackgroundTasks,
     database_session: Session = Depends(get_db),
 ):
     interview_request = create_interview_request(
         database_session=database_session,
         request_data=request_data.model_dump(),
+    )
+
+    preferred_datetime = (
+        interview_request.preferred_datetime.isoformat()
+        if interview_request.preferred_datetime
+        else None
+    )
+
+    background_tasks.add_task(
+        send_interview_admin_notification,
+        name=interview_request.name,
+        email=interview_request.email,
+        phone=interview_request.phone,
+        company=interview_request.company,
+        role=interview_request.role,
+        preferred_datetime=preferred_datetime,
+        timezone=interview_request.timezone,
+        meeting_mode=interview_request.meeting_mode,
+        message=interview_request.message,
+    )
+
+    background_tasks.add_task(
+        send_interview_confirmation,
+        name=interview_request.name,
+        email=interview_request.email,
+        company=interview_request.company,
+        role=interview_request.role,
     )
 
     return {
@@ -61,7 +93,6 @@ def submit_interview_request(
         ),
         "created_at": interview_request.created_at,
     }
-
 
 @admin_router.get(
     "",

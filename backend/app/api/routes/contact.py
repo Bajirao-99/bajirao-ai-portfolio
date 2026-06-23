@@ -5,6 +5,7 @@ from fastapi import (
     Query,
     Response,
     status,
+    BackgroundTasks,
 )
 from sqlalchemy.orm import Session
 
@@ -25,6 +26,10 @@ from app.services.communication_service import (
     update_contact_message,
 )
 
+from app.services.email_service import (
+    send_contact_admin_notification,
+    send_contact_confirmation,
+)
 
 public_router = APIRouter(
     prefix="/api/v1/contact",
@@ -45,11 +50,28 @@ admin_router = APIRouter(
 )
 def submit_contact_message(
     message_data: ContactMessageCreate,
+    background_tasks: BackgroundTasks,
     database_session: Session = Depends(get_db),
 ):
     contact_message = create_contact_message(
         database_session=database_session,
         message_data=message_data.model_dump(),
+    )
+
+    background_tasks.add_task(
+        send_contact_admin_notification,
+        name=contact_message.name,
+        email=contact_message.email,
+        phone=contact_message.phone,
+        subject=contact_message.subject,
+        message=contact_message.message,
+    )
+
+    background_tasks.add_task(
+        send_contact_confirmation,
+        name=contact_message.name,
+        email=contact_message.email,
+        subject=contact_message.subject,
     )
 
     return {

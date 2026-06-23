@@ -570,6 +570,26 @@ textarea:focus-visible {
   font-weight: 900;
 }
 
+.profile-card {
+  overflow: hidden;
+}
+
+.profile-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-initials {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 4rem;
+  font-weight: 800;
+}
+
 .profile-status {
   display: flex;
   align-items: center;

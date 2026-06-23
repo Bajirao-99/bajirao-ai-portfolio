@@ -64,6 +64,26 @@ class Settings(BaseSettings):
         "localhost,127.0.0.1"
     )
 
+    resend_api_key: str | None = None
+
+    email_notifications_enabled: bool = False
+
+    email_from_name: str = (
+        "Bajirao AI Portfolio"
+    )
+
+    email_from_address: str = (
+        "onboarding@resend.dev"
+    )
+
+    admin_notification_email: str = (
+        "bajisalunke001@gmail.com"
+    )
+
+    public_frontend_url: str = (
+        "http://localhost:5173"
+    )
+
     @property
     def cors_origins_list(self) -> list[str]:
         return [

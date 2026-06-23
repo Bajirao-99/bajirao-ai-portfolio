@@ -1,0 +1,11 @@
+{
+  "name": "Rahul Sharma",
+  "email": "bajisalunke001@gmail.com",
+  "phone": "+91 9876543210",
+  "company": "TCS",
+  "role": "Python Backend Developer",
+  "preferred_datetime": "2026-06-25T11:00:00+05:30",
+  "timezone": "Asia/Kolkata",
+  "meeting_mode": "Google Meet",
+  "message": "Testing production interview request email notification."
+}
