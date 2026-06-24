@@ -6,11 +6,9 @@ The platform presents professional experience, projects, research, skills, codin
 
 ## Live Application
 
-- Frontend: `https://YOUR-VERCEL-URL`
+- Frontend: `https://bajiraosalunke.com`
 - Backend API: `https://api.bajiraosalunke.com`
 - Health Check: `https://api.bajiraosalunke.com/api/v1/health`
-
-Replace `YOUR-VERCEL-URL` with the exact deployed Vercel production URL.
 
 ---
 
