@@ -5021,3 +5021,97 @@ textarea:focus-visible {
     animation: none;
   }
 }
+
+@keyframes chatLauncherFloat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-7px) scale(1.03);
+  }
+}
+
+@keyframes chatLauncherGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 14px 36px rgba(37, 99, 235, 0.22),
+      0 0 0 rgba(37, 99, 235, 0);
+  }
+
+  50% {
+    box-shadow:
+      0 20px 55px rgba(37, 99, 235, 0.36),
+      0 0 36px rgba(37, 99, 235, 0.30);
+  }
+}
+
+@keyframes chatLauncherRing {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.75;
+  }
+
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+@keyframes chatLauncherIconShake {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(-8deg) scale(1.12);
+  }
+}
+
+.chat-launcher {
+  position: fixed;
+  isolation: isolate;
+  animation:
+    chatLauncherFloat 3.2s ease-in-out infinite,
+    chatLauncherGlow 2.8s ease-in-out infinite;
+  transition:
+    transform 220ms ease,
+    filter 220ms ease,
+    box-shadow 220ms ease;
+  will-change: transform, box-shadow;
+}
+
+.chat-launcher::before {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  z-index: -1;
+  border-radius: inherit;
+  border: 1px solid rgba(37, 99, 235, 0.42);
+  animation: chatLauncherRing 2.2s ease-out infinite;
+  pointer-events: none;
+}
+
+.chat-launcher svg {
+  animation: chatLauncherIconShake 2.4s ease-in-out infinite;
+}
+
+.chat-launcher:hover {
+  transform: translateY(-6px) scale(1.08);
+  filter: brightness(1.08);
+}
+
+.chat-launcher:active {
+  transform: translateY(-2px) scale(0.96);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-launcher,
+  .chat-launcher::before,
+  .chat-launcher svg {
+    animation: none;
+  }
+}

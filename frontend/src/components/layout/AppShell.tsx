@@ -1,3 +1,5 @@
+import WelcomeVoice from "../WelcomeVoice";
+
 import PortfolioChatWidget from "../PortfolioChatWidget";
 
 import RouteSeo from "../RouteSeo";
@@ -160,7 +162,8 @@ export default function AppShell() {
       >
         <Outlet />
       </main>
-
+      
+      <WelcomeVoice />
       <PortfolioChatWidget />
 
       <footer className="site-footer">
