@@ -1,3 +1,5 @@
+import ScrollMemory from "./components/ScrollMemory";
+
 import {
   lazy,
   Suspense,
@@ -132,96 +134,100 @@ function RouteLoader() {
 
 export default function App() {
   return (
-    <Suspense
-      fallback={<RouteLoader />}
-    >
-      <Routes>
-        <Route
-          path="/admin/login"
-          element={
-            <AdminLoginPage />
-          }
-        />
+    <>
+      <ScrollMemory />
 
-        <Route
-          element={
-            <ProtectedAdminRoute />
-          }
-        >
+      <Suspense
+        fallback={<RouteLoader />}
+      >
+        <Routes>
           <Route
-            path="/admin"
-            element={<AdminShell />}
+            path="/admin/login"
+            element={
+              <AdminLoginPage />
+            }
+          />
+
+          <Route
+            element={
+              <ProtectedAdminRoute />
+            }
           >
             <Route
-              index
+              path="/admin"
+              element={<AdminShell />}
+            >
+              <Route
+                index
+                element={
+                  <AdminDashboardPage />
+                }
+              />
+
+              <Route
+                path="messages"
+                element={
+                  <AdminContactMessagesPage />
+                }
+              />
+
+              <Route
+                path="interviews"
+                element={
+                  <AdminInterviewRequestsPage />
+                }
+              />
+
+              <Route
+                path="ai-activity"
+                element={
+                  <AdminAIActivityPage />
+                }
+              />
+
+              <Route
+                path="content"
+                element={
+                  <AdminContentPage />
+                }
+              />
+            </Route>
+          </Route>
+
+          <Route
+            element={<AppShell />}
+          >
+            <Route
+              path="/"
+              element={<HomePage />}
+            />
+
+            <Route
+              path="/ai-tools"
+              element={<AIToolsPage />}
+            />
+
+            <Route
+              path="/projects/:slug"
               element={
-                <AdminDashboardPage />
+                <ProjectDetailPage />
               }
             />
 
             <Route
-              path="messages"
+              path="/research/:slug"
               element={
-                <AdminContactMessagesPage />
+                <ResearchDetailPage />
               }
             />
 
             <Route
-              path="interviews"
-              element={
-                <AdminInterviewRequestsPage />
-              }
-            />
-
-            <Route
-              path="ai-activity"
-              element={
-                <AdminAIActivityPage />
-              }
-            />
-
-            <Route
-              path="content"
-              element={
-                <AdminContentPage />
-              }
+              path="*"
+              element={<NotFoundPage />}
             />
           </Route>
-        </Route>
-
-        <Route
-          element={<AppShell />}
-        >
-          <Route
-            path="/"
-            element={<HomePage />}
-          />
-
-          <Route
-            path="/ai-tools"
-            element={<AIToolsPage />}
-          />
-
-          <Route
-            path="/projects/:slug"
-            element={
-              <ProjectDetailPage />
-            }
-          />
-
-          <Route
-            path="/research/:slug"
-            element={
-              <ResearchDetailPage />
-            }
-          />
-
-          <Route
-            path="*"
-            element={<NotFoundPage />}
-          />
-        </Route>
-      </Routes>
-    </Suspense>
+        </Routes>
+      </Suspense>
+    </>
   );
 }
