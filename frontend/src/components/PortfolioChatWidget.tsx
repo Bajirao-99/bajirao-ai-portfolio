@@ -32,6 +32,7 @@ interface ChatMessage {
   content: string;
   sources?: ChatSource[];
   grounded?: boolean;
+  answerMode?: "portfolio" | "general" | "mixed";
 }
 
 const fallbackSuggestions = [
@@ -90,7 +91,7 @@ export default function PortfolioChatWidget() {
         id: "welcome",
         role: "assistant",
         content:
-          "Hello. Ask me about Bajirao's skills, projects, experience, research or suitable roles.",
+          "Hello. I am Bajirao AI Assistant. Ask me about Bajirao's portfolio, projects and skills, or ask general questions about coding, AI/ML, interviews and technology.",
         grounded: true,
       },
     ]);
@@ -180,6 +181,7 @@ export default function PortfolioChatWidget() {
           content: response.answer,
           sources: response.sources,
           grounded: response.grounded,
+          answerMode: response.answer_mode,
         },
       ]);
     } catch (error) {
@@ -238,11 +240,11 @@ export default function PortfolioChatWidget() {
 
               <div>
                 <strong>
-                  Portfolio Assistant
+                  Bajirao AI Assistant
                 </strong>
 
                 <span>
-                  Grounded in portfolio data
+                  Portfolio + general AI
                 </span>
               </div>
             </div>
@@ -281,6 +283,18 @@ export default function PortfolioChatWidget() {
                   )}
 
                   <p>{message.content}</p>
+                  {message.role === "assistant" &&
+                    message.answerMode && (
+                      <span
+                        className={`chat-answer-badge chat-answer-badge-${message.answerMode}`}
+                      >
+                        {message.answerMode === "portfolio"
+                          ? "Portfolio answer"
+                          : message.answerMode === "mixed"
+                            ? "Portfolio + general answer"
+                            : "General AI answer"}
+                      </span>
+                    )}
                 </div>
 
                 {message.sources &&
@@ -357,7 +371,7 @@ export default function PortfolioChatWidget() {
                       className="spin"
                       size={16}
                     />
-                    Searching portfolio data...
+                    Thinking and preparing answer...
                   </p>
 
                   <span className="sr-only">
@@ -402,7 +416,7 @@ export default function PortfolioChatWidget() {
                   event.target.value,
                 );
               }}
-              placeholder="Ask about skills, projects or research..."
+              placeholder="Ask about portfolio, coding, AI/ML, interviews or any general question..."
               aria-label="Ask portfolio assistant"
             />
 
@@ -419,8 +433,7 @@ export default function PortfolioChatWidget() {
           </form>
 
           <p className="chat-disclaimer">
-            Answers are generated only from
-            available portfolio information.
+            Answers may use portfolio context or general AI depending on your question.
           </p>
         </section>
       )}

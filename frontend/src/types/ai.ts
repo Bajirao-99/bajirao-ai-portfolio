@@ -94,6 +94,7 @@ export interface PortfolioChatResponse {
   sources: ChatSource[];
   model_name: string;
   retrieval_method: string;
+  answer_mode: "portfolio" | "general" | "mixed";
   disclaimer: string;
 }
 

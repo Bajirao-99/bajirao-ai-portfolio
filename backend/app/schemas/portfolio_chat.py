@@ -55,6 +55,12 @@ class PortfolioChatResponse(BaseModel):
     model_name: str
     retrieval_method: str
 
+    answer_mode: Literal[
+        "portfolio",
+        "general",
+        "mixed",
+    ] = "portfolio"
+    
     disclaimer: str = (
         "This answer is generated only from the "
         "portfolio information currently available."

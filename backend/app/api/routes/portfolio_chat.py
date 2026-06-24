@@ -50,12 +50,13 @@ def chatbot_suggestions():
     return [
         "What are Bajirao's strongest technical skills?",
         "Explain the RecruitAI Pro project.",
-        "What is his teaching experience?",
-        "What was the result of his NLP research?",
         "Is he suitable for a Python backend role?",
-        "Which resume should I download for an AI role?",
+        "Explain FastAPI in simple words.",
+        "Give me Python interview questions.",
+        "What is RAG in AI?",
+        "Explain REST API with example.",
+        "How should I prepare for an AI/ML interview?",
     ]
-
 
 @public_router.post(
     "",

@@ -5115,3 +5115,29 @@ textarea:focus-visible {
     animation: none;
   }
 }
+
+.chat-answer-badge {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 8px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.chat-answer-badge-portfolio {
+  color: #7c2d12;
+  background: rgba(251, 146, 60, 0.16);
+}
+
+.chat-answer-badge-general {
+  color: #1e40af;
+  background: rgba(59, 130, 246, 0.14);
+}
+
+.chat-answer-badge-mixed {
+  color: #6d28d9;
+  background: rgba(139, 92, 246, 0.14);
+}

@@ -8,8 +8,10 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.ai.gemini_chat_service import (
+    generate_general_answer,
     generate_grounded_answer,
 )
+
 from app.ai.portfolio_retriever import (
     retrieve_portfolio_context,
 )
@@ -24,6 +26,81 @@ INSUFFICIENT_INFORMATION_ANSWER = (
     "to answer that."
 )
 
+PORTFOLIO_KEYWORDS = {
+    "bajirao",
+    "salunke",
+    "your portfolio",
+    "his portfolio",
+    "your profile",
+    "his profile",
+    "your resume",
+    "his resume",
+    "your project",
+    "his project",
+    "projects",
+    "skills",
+    "experience",
+    "education",
+    "research",
+    "iit guwahati",
+    "gate",
+    "leetcode",
+    "github",
+    "linkedin",
+    "recruitai",
+    "hindi nlp",
+    "assistant professor",
+    "suitable for",
+    "hire",
+    "candidate",
+}
+
+GENERAL_KEYWORDS = {
+    "explain",
+    "what is",
+    "how to",
+    "write code",
+    "program",
+    "python",
+    "java",
+    "c++",
+    "javascript",
+    "react",
+    "fastapi",
+    "sql",
+    "database",
+    "machine learning",
+    "deep learning",
+    "algorithm",
+    "data structure",
+    "interview",
+    "difference between",
+    "example",
+}
+
+
+def detect_chat_mode(
+    question: str,
+) -> str:
+    clean_question = question.lower()
+
+    has_portfolio_signal = any(
+        keyword in clean_question
+        for keyword in PORTFOLIO_KEYWORDS
+    )
+
+    has_general_signal = any(
+        keyword in clean_question
+        for keyword in GENERAL_KEYWORDS
+    )
+
+    if has_portfolio_signal and has_general_signal:
+        return "mixed"
+
+    if has_portfolio_signal:
+        return "portfolio"
+
+    return "general"
 
 class ChatRateLimitError(Exception):
     pass
@@ -112,6 +189,39 @@ def answer_portfolio_question(
         visitor_key=visitor_key,
     )
 
+    chat_mode = detect_chat_mode(
+        question
+    )
+
+    if chat_mode == "general":
+        answer = generate_general_answer(
+            question=question,
+            history=history,
+        )
+
+        interaction = save_chat_interaction(
+            database_session=database_session,
+            visitor_key=visitor_key,
+            question=question,
+            answer=answer,
+            sources=[],
+            confidence_score=0.0,
+            grounded=False,
+            model_name=settings.gemini_model_name,
+            retrieval_method="general-gemini",
+        )
+
+        return {
+            "interaction_id": interaction.id,
+            "answer": answer,
+            "grounded": False,
+            "confidence_score": 0.0,
+            "sources": [],
+            "model_name": settings.gemini_model_name,
+            "retrieval_method": "general-gemini",
+            "answer_mode": "general",
+        }
+
     (
         sources,
         retrieval_method,
@@ -123,6 +233,35 @@ def answer_portfolio_question(
     )
 
     if not sources:
+        if chat_mode == "mixed":
+            answer = generate_general_answer(
+                question=question,
+                history=history,
+            )
+
+            interaction = save_chat_interaction(
+                database_session=database_session,
+                visitor_key=visitor_key,
+                question=question,
+                answer=answer,
+                sources=[],
+                confidence_score=0.0,
+                grounded=False,
+                model_name=settings.gemini_model_name,
+                retrieval_method="mixed-general-fallback",
+            )
+
+            return {
+                "interaction_id": interaction.id,
+                "answer": answer,
+                "grounded": False,
+                "confidence_score": 0.0,
+                "sources": [],
+                "model_name": settings.gemini_model_name,
+                "retrieval_method": "mixed-general-fallback",
+                "answer_mode": "mixed",
+            }
+
         interaction = save_chat_interaction(
             database_session=database_session,
             visitor_key=visitor_key,
@@ -147,6 +286,7 @@ def answer_portfolio_question(
             "retrieval_method": (
                 interaction.retrieval_method
             ),
+            "answer_mode": "portfolio",
         }
 
     answer = generate_grounded_answer(
@@ -184,8 +324,8 @@ def answer_portfolio_question(
         "sources": public_sources,
         "model_name": settings.gemini_model_name,
         "retrieval_method": retrieval_method,
+        "answer_mode": chat_mode,
     }
-
 
 def list_chat_interactions(
     database_session: Session,
