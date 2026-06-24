@@ -45,3 +45,7 @@ frontend/.env
 
 # Local generated content
 backend/uploads/Key.txt
+
+
+frontend/playwright-report/
+frontend/test-results/
