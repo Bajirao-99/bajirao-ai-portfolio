@@ -339,6 +339,14 @@ export default function HomePage() {
                 <ArrowRight size={18} />
               </Link>
 
+              <Link
+                className="button ask-ai-animated"
+                to="/ai-tools"
+              >
+                <Sparkles size={18} />
+                Ask AI
+              </Link>
+
               {resumeUrl && (
                 <a
                   className="button button-secondary"
