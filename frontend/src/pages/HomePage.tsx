@@ -344,7 +344,7 @@ export default function HomePage() {
                 to="/ai-tools"
               >
                 <Sparkles size={18} />
-                Ask AI
+                JD Analyzer
               </Link>
 
               {resumeUrl && (
