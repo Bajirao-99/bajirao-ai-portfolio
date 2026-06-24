@@ -49,3 +49,9 @@ backend/uploads/Key.txt
 
 frontend/playwright-report/
 frontend/test-results/
+
+
+# Personal career documents
+Career_Documents/
+Job_Application_Tracker.csv
+Launch_Links.txt
