@@ -384,8 +384,15 @@ export default function HomePage() {
           </div>
 
           <div className="hero-visual">
-            <div className="profile-orbit profile-orbit-large" />
-            <div className="profile-orbit profile-orbit-small" />
+            <div
+              className="profile-orbit profile-orbit-large orbit-spin-clockwise"
+              aria-hidden="true"
+            />
+
+            <div
+              className="profile-orbit profile-orbit-small orbit-spin-reverse"
+              aria-hidden="true"
+            />
 
             <div className="profile-card">
               {profileImageUrl && !profileImageFailed ? (
@@ -418,7 +425,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="floating-card floating-card-code">
+            <div className="floating-card floating-card-code floating-card-motion-one">
               <Code2 size={20} />
               <div>
                 <strong>Full Stack</strong>
@@ -426,7 +433,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="floating-card floating-card-ai">
+            <div className="floating-card floating-card-ai floating-card-motion-two">
               <Sparkles size={20} />
               <div>
                 <strong>AI & NLP</strong>
